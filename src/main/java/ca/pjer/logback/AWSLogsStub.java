@@ -3,6 +3,7 @@ package ca.pjer.logback;
 import com.amazonaws.regions.RegionUtils;
 import com.amazonaws.services.logs.AWSLogs;
 import com.amazonaws.services.logs.AWSLogsClient;
+import com.amazonaws.services.logs.AWSLogsClientBuilder;
 import com.amazonaws.services.logs.model.*;
 
 import java.util.*;
@@ -29,11 +30,11 @@ class AWSLogsStub {
         this.logGroupName = logGroupName;
         this.logStreamName = logStreamName;
 
-        AWSLogs awsLogs = new AWSLogsClient();
+        AWSLogsClientBuilder awsLogsBuilder = AWSLogsClientBuilder.standard();
         if (logRegion != null) {
-            awsLogs.setRegion(RegionUtils.getRegion(logRegion));
+            awsLogsBuilder.setRegion(logRegion);
         }
-        this.awsLogs = awsLogs;
+        this.awsLogs = awsLogsBuilder.build();
     }
 
     synchronized void start() {
